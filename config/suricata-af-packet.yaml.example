@@ -1,1 +1,21 @@
+af-packet:
+  - interface: ens37
+    # Number of receive threads. "auto" uses the number of cores
+    #threads: auto
+    # Default clusterid. AF_PACKET will load balance packets based on flow.
+    cluster-id: 99
+    # Default AF_PACKET cluster type. AF_PACKET can load balance per flow or per hash.
+    # This is only supported for Linux kernel > 3.1
+    # possible value are:
+    #  * cluster_flow: all packets of a given flow are sent to the same socket
+    #  * cluster_cpu: all packets treated in kernel by a CPU are sent to the same socket
+    #  * cluster_qm: all packets linked by network card to a RSS queue are sent to the same
+    #  socket. Requires at least Linux 3.14.
+    #  * cluster_ebpf: eBPF file load balancing. See doc/userguide/capture-hardware/ebpf-xdp.rst for
+    #  more info.
+    # Recommended modes are cluster_flow on most boxes and cluster_cpu or cluster_qm on system
+    # with capture card using RSS (requires cpu affinity tuning and system IRQ tuning)
+    # cluster_rollover has been deprecated; if used, it'll be replaced with cluster_flow.
+    cluster-type: cluster_flow
+    # In some fragmentation cases, the hash can not be computed. If "defrag" is set
 
