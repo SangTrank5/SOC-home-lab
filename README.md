@@ -84,13 +84,13 @@ soc-home-lab/
 
 | # | Module | Nội dung chính |
 |---|---|---|
-| 1 | [Network Foundation](docs/01-network-foundation.md) | VMware Custom VMnet, subnet cô lập 10.2.66.0/24 |
-| 2 | [Wazuh SIEM](docs/02-wazuh-siem.md) | Cài đặt Manager/Indexer/Dashboard, tích hợp Windows/Linux agent, Sysmon |
-| 3 | [Kali + Metasploitable2](docs/03-kali-metasploitable.md) | Nmap recon, Metasploit RCE (vsftpd backdoor), Hydra brute-force, SQLi trên DVWA |
-| 4 | [Detection Engineering](docs/04-detection-engineering.md) | Viết & test custom Wazuh rule bằng Atomic Red Team |
-| 5 | [NIDS - Suricata](docs/05-nids-suricata.md) | Suricata trên Linux victim, tích hợp eve.json vào Wazuh |
-| 6 | [Incident Response](docs/06-incident-response.md) | Kịch bản SSH brute-force đầy đủ: detect → investigate → contain → report |
-| 7 | [ATT&CK Navigator](docs/07-attack-navigator.md) | Coverage matrix, phân tích detection gap |
+| 1 | [Network Foundation](incident-reports/01-network-foundation.md) | VMware Custom VMnet, subnet cô lập 10.2.66.0/24 |
+| 2 | [Wazuh SIEM](incident-reports/02-wazuh-siem.md) | Cài đặt Manager/Indexer/Dashboard, tích hợp Windows/Linux agent, Sysmon |
+| 3 | [Kali + Metasploitable2](incident-reports/03-kali-metasploitable.md) | Nmap recon, Metasploit RCE (vsftpd backdoor), Hydra brute-force, SQLi trên DVWA |
+| 4 | [Detection Engineering](incident-reports/04-detection-engineering.md) | Viết & test custom Wazuh rule bằng Atomic Red Team |
+| 5 | [NIDS - Suricata](incident-reports/05-nids-suricata.md) | Suricata trên Linux victim, tích hợp eve.json vào Wazuh |
+| 6 | [Incident Response](incident-reports/06-incident-response.md) | Kịch bản SSH brute-force đầy đủ: detect → investigate → contain → report |
+| 7 | [ATT&CK Navigator](incident-reports/07-attack-navigator.md) | Coverage matrix, phân tích detection gap |
 
 ## MITRE ATT&CK Coverage
 
