@@ -85,7 +85,7 @@ Quay lại dashboard, truy vấn `rule.id:100011`:
 
 ## 3. T1087 — Account Discovery (bổ sung ở module Incident Response)
 
-Trong quá trình điều tra kịch bản IR (xem [module 6](../incident-reports/2026-07-26_ssh-bruteforce-victim.md)), phát hiện `auth.log` không ghi lại nội dung lệnh sau khi đăng nhập — cần bổ sung `auditd` để có visibility tương đương Sysmon trên Linux, và viết thêm rule `100014` cho hành vi `cat /etc/passwd`. Chi tiết đầy đủ nằm trong báo cáo Incident Response.
+Trong quá trình điều tra kịch bản IR (xem [module 6](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/IR%20scenarios/auditd%20config.png)), phát hiện `auth.log` không ghi lại nội dung lệnh sau khi đăng nhập — cần bổ sung `auditd` để có visibility tương đương Sysmon trên Linux, và viết thêm rule `100014` cho hành vi `cat /etc/passwd`. Chi tiết đầy đủ nằm trong báo cáo Incident Response.
 
 ## Bảng tổng hợp vấn đề gặp phải
 
