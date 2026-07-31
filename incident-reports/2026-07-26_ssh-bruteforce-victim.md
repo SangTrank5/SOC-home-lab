@@ -1,6 +1,6 @@
 # Incident Report: SSH Brute-Force Attack on victim-virtual-machine
 
-**Người điều tra:** [Tên bạn]
+**Người điều tra:** [SangTrank5]
 **Ngày xảy ra sự cố:** 26/07/2026
 **Ngày viết báo cáo:** 26/07/2026
 **Mức độ nghiêm trọng:** Cao (brute-force thành công, kẻ tấn công có được shell với quyền sudo ALL)
@@ -25,25 +25,25 @@ Ngày 26/07/2026, hệ thống SIEM (Wazuh) ghi nhận nhiều alert xác thực
 
 | Thời gian (giờ:phút) | Sự kiện |
 |---|---|
-| [điền giờ] | Hydra bắt đầu brute-force SSH từ 10.2.66.135 |
-| [điền giờ] | Hydra xác định mật khẩu đúng |
-| [điền giờ] | Đăng nhập SSH thành công từ 10.2.66.135, giả lập hành vi kẻ tấn công đăng nhập trái phép |
-| [điền giờ] | Kẻ tấn công chạy các lệnh trinh sát: `whoami`, `sudo -l`, `cat /etc/passwd` |
-| [điền giờ] | Wazuh Dashboard phát hiện qua truy vấn `rule.groups:*authentication*`, xác nhận đăng nhập thành công |
-| [điền giờ] | Suricata trigger alert tương ứng với traffic từ nguồn tấn công |
-| [điền giờ] | Containment: chặn IP `10.2.66.135` qua Uncomplicated Firewall (ufw) trên victim |
-| [điền giờ] | Xác nhận containment: kết nối SSH tiếp theo từ máy tấn công bị chặn thành công |
-| [điền giờ] | Bổ sung giám sát: cấu hình `auditd` + custom rule để phát hiện lệnh trinh sát sau đăng nhập |
+| [16:24] | Hydra bắt đầu brute-force SSH từ 10.2.66.135 |
+| [16:24] | Hydra xác định mật khẩu đúng |
+| [16:24] | Đăng nhập SSH thành công từ 10.2.66.135, giả lập hành vi kẻ tấn công đăng nhập trái phép |
+| [16:24] | Wazuh Dashboard phát hiện qua truy vấn `rule.groups:*authentication*`, xác nhận đăng nhập thành công |
+| [16:57] | Suricata trigger alert tương ứng với traffic từ nguồn tấn công |
+| [18:22] | Kẻ tấn công chạy các lệnh trinh sát: `whoami`, `sudo -l`, `cat /etc/passwd` |
+| [18:22] | Wazuh Dashboard phát hiện các command đáng ngờ
+| [18:04] | Containment: chặn IP `10.2.66.135` qua Uncomplicated Firewall (ufw) trên victim |
+| [18:04] | Xác nhận containment: kết nối SSH tiếp theo từ máy tấn công bị chặn thành công |
+
 
 ## 4. Phát hiện (Detection)
 
 - **Nguồn phát hiện 1 — Wazuh (HIDS):** đọc log `/var/log/auth.log`, truy vấn DQL `rule.groups:*authentication*` trên Threat Hunting trả về loạt alert xác thực thất bại liên tiếp từ cùng 1 IP, sau đó là alert đăng nhập thành công.
 
-  ![Wazuh dashboard phát hiện brute-force](../screenshots/06-ir/wazuh-auth-alerts.png)
+  ![Wazuh dashboard phát hiện brute-force](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/IR%20scenarios/dashboard%20alert%20bruteforce.png)
 
-- **Nguồn phát hiện 2 — Suricata (NIDS):** ghi nhận traffic bất thường từ 10.2.66.135, alert hiện song song trên cùng dashboard nhờ tích hợp `eve.json` (xem [module 5](../docs/05-nids-suricata.md)).
+- **Nguồn phát hiện 2 — Suricata (NIDS):** ghi nhận traffic bất thường từ 10.2.66.135, alert hiện song song trên cùng dashboard nhờ tích hợp `eve.json` (xem [module 5](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/IR%20scenarios/suricata%20alert.png)).
 
-  ![Suricata alert tương ứng](../screenshots/06-ir/suricata-alert.png)
 
 - **Ghi chú kỹ thuật quan trọng:** ban đầu, log `auth.log` chỉ ghi lại được sự kiện xác thực (login/logout/sudo), **không ghi lại nội dung lệnh** kẻ tấn công gõ sau khi đăng nhập thành công (`cat /etc/passwd` không để lại dấu vết trong nguồn log này). Đây là khoảng trống phát hiện (detection gap) tương tự việc thiếu Sysmon trên Windows.
 
@@ -55,7 +55,7 @@ Ngày 26/07/2026, hệ thống SIEM (Wazuh) ghi nhận nhiều alert xác thực
 - **Lấp khoảng trống phát hiện:** để giám sát được hành vi sau đăng nhập, cấu hình bổ sung `auditd` (tương đương Sysmon trên Linux) để ghi lại mọi lệnh thực thi (`execve` syscall), trỏ Wazuh agent đọc `/var/log/audit/audit.log`, và viết custom rule mới (`100014`, level 10) để nâng mức độ nghiêm trọng cho hành vi truy cập file nhạy cảm — mặc định Wazuh gộp các sự kiện audit vào 1 rule chung level 0, không tự động hiển thị alert nếu không có rule riêng.
 - Sau khi bổ sung, truy vấn `data.audit.command:*` trên Threat Hunting trả về đầy đủ các lệnh kẻ tấn công đã thực thi.
 
-  ![Custom rule 100014 phát hiện cat /etc/passwd](../screenshots/06-ir/rule-100014-audit.png)
+  ![Custom rule 100014 phát hiện cat /etc/passwd](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/IR%20scenarios/c%C3%A1c%20command%20t%E1%BB%AB%20attacker.png)
 
 ## 6. Containment (Ngăn chặn)
 
@@ -67,11 +67,11 @@ sudo ufw reject from 10.2.66.135 to any
 sudo ufw status
 ```
 
-![Cấu hình chặn qua ufw](../screenshots/06-ir/ufw-block.png)
+![Cấu hình chặn qua ufw](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/IR%20scenarios/tr%C3%AAn%20victim%20ch%E1%BA%B7n%20ip%20k%E1%BA%BB%20t%E1%BA%A5n%20c%C3%B4ng.png)
 
 Xác nhận hiệu quả từ phía máy tấn công — kết nối SSH tiếp theo bị từ chối/timeout ngay lập tức.
 
-![Xác nhận kết nối bị chặn từ Kali](../screenshots/06-ir/kali-blocked.png)
+![Xác nhận kết nối bị chặn từ Kali](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/IR%20scenarios/m%C3%A1y%20atk%20kh%C3%B4ng%20th%E1%BB%83%20ti%E1%BA%BFp%20t%E1%BB%A5c%20%C4%91%C4%83ng%20nh%E1%BA%ADp.png)
 
 **Lưu ý kỹ thuật:** ban đầu dùng `ufw deny` (âm thầm DROP gói tin), khiến việc xác nhận containment mất nhiều thời gian do phải chờ TCP timeout. Chuyển sang `ufw reject` (gửi phản hồi từ chối ngay lập tức) giúp xác nhận nhanh và rõ ràng hơn.
 
