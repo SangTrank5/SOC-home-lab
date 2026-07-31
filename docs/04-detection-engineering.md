@@ -18,7 +18,7 @@ IEX (IWR 'https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/mas
 Install-AtomicRedTeam -getAtomics
 ```
 
-![Cài đặt Atomic Red Team](../screenshots/04-detection/atomicredteam-install.png)
+![Cài đặt Atomic Red Team](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Detection/C%C3%A0i%20atomicredteam%20tr%C3%AAn%20server%202022.png)
 
 Thực thi test T1059.001-17 (PowerShell Command Execution):
 
@@ -26,7 +26,7 @@ Thực thi test T1059.001-17 (PowerShell Command Execution):
 Invoke-AtomicTest T1059.001 -TestNumbers 17
 ```
 
-![Thực thi test PowerShell](../screenshots/04-detection/t1059-execution.png)
+![Thực thi test PowerShell](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Detection/Th%E1%BB%B1c%20thi%20powershell%20excution.png)
 
 Kiểm tra log Sysmon ghi nhận đúng command line chạy dưới dạng encoded (`-e`):
 
@@ -54,7 +54,7 @@ Viết custom rule trên manager (`sudo nano /var/ossec/etc/rules/local_rules.xm
 
 Restart manager, xác nhận trên Threat Hunting với truy vấn DQL `rule.id:100010`:
 
-![Rule 100010 nổ thành công](../screenshots/04-detection/rule-100010-alert.png)
+![Rule 100010 nổ thành công](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Detection/powershell%20execute%20tr%C3%AAn%20dashboard.png)
 
 ## 2. T1003 — Credential Dumping bằng Mimikatz
 
@@ -77,11 +77,11 @@ Bật ghi log đầy đủ (`logall_json: yes`) trong `/var/ossec/etc/ossec.conf
 
 Trên Windows Server, thực thi test Mimikatz (T1059.001-1) qua Atomic Red Team — tải và chạy `Invoke-Mimikatz -DumpCreds` (download cradle từ PowerSploit):
 
-![Thực thi Mimikatz qua Atomic Red Team](../screenshots/04-detection/mimikatz-execution.png)
+![Thực thi Mimikatz qua Atomic Red Team](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Detection/Th%E1%BB%B1c%20thi%20mimikatz(credential%20dump).png)
 
 Quay lại dashboard, truy vấn `rule.id:100011`:
 
-![Rule 100011 nổ thành công](../screenshots/04-detection/rule-100011-alert.png)
+![Rule 100011 nổ thành công](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Detection/Credential%20dump%20hi%E1%BB%87n%20tr%C3%AAn%20dashboard%20wazuh.png)
 
 ## 3. T1087 — Account Discovery (bổ sung ở module Incident Response)
 
