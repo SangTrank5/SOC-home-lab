@@ -24,8 +24,8 @@ Truy cập qua trình duyệt trên Kali:
 - DVWA: `http://localhost:8080`
 - Juice Shop: `http://localhost:3000`
 
-![DVWA giao diện chính](../screenshots/03-kali/dvwa-web.png)
-![Juice Shop giao diện chính](../screenshots/03-kali/juiceshop-web.png)
+![DVWA giao diện chính](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/DVWA%20web.png)
+![Juice Shop giao diện chính](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/Juice%20shop.png)
 
 ## 2. Network Reconnaissance
 
@@ -35,7 +35,7 @@ Quét toàn bộ subnet lab để xác định các host đang hoạt động:
 sudo nmap -sn 10.2.66.0/24
 ```
 
-![Kết quả quét subnet](../screenshots/03-kali/nmap-subnet-scan.png)
+![Kết quả quét subnet](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/nmap%20ki%E1%BB%83m%20tra%20m%C3%A1y%20alive.png)
 
 Sau khi xác định Metasploitable2 ở `10.2.66.136`, tiến hành quét sâu để liệt kê service và version:
 
@@ -53,7 +53,7 @@ Kết quả cho thấy Metasploitable2 mở gần 20 service, trong đó đáng 
 | 3306 | MySQL 5.0.51a | |
 | 6667 | UnrealIRCd | Cũng có backdoor đã biết |
 
-![Kết quả quét chi tiết Metasploitable2](../screenshots/03-kali/nmap-metasploitable-detail.png)
+![Kết quả quét chi tiết Metasploitable2](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/D%C3%99ng%20kali%20qu%C3%A9t%20ip%20c%E1%BB%A7a%20metasploitable2.png)
 
 ## 3. Credential Brute-Force — Hydra
 
@@ -76,7 +76,7 @@ Host 10.2.66.136
 
 Sau khi sửa, Hydra brute-force thành công, tìm ra đúng mật khẩu:
 
-![Hydra brute-force thành công](../screenshots/03-kali/hydra-success.png)
+![Hydra brute-force thành công](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/%C4%91%C3%A3%20l%E1%BA%A5y%20%C4%91%C6%B0%E1%BB%A3c%20m%E1%BA%ADt%20kh%E1%BA%A9u%20c%E1%BB%A7a%20metasploitable2.png)
 
 ## 4. Exploitation — vsftpd 2.3.4 Backdoor (Remote Code Execution)
 
@@ -94,8 +94,8 @@ run
 
 Sau khi khắc phục, exploit thành công, thu được Meterpreter session với quyền root:
 
-![Metasploit thiết lập backdoor](../screenshots/03-kali/msf-vsftpd-setup.png)
-![Meterpreter session - quyền root](../screenshots/03-kali/msf-vsftpd-root-shell.png)
+![Metasploit thiết lập backdoor](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/setup%20backdoor%20cho%20metasploitable.png)
+![Meterpreter session - quyền root](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/T%E1%BA%A1o%20backdoor.png)
 
 ## 5. Web Exploitation — SQL Injection trên DVWA
 
@@ -107,7 +107,9 @@ Với DVWA Security level đặt ở **Low**, thực hiện UNION-based SQL Inje
 
 Kết quả trả về tên database (`dvwa`) và phiên bản MariaDB đang chạy — chứng minh khả năng đọc dữ liệu hệ thống thông qua 1 form vốn chỉ để tra cứu user theo ID.
 
-![SQL Injection thành công trên DVWA](../screenshots/03-kali/dvwa-sqli.png)
+![SQL Injection thành công trên DVWA](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/SQLi%20tr%C3%AAn%20DVWA1.png)
+
+![SQL Injection thành công trên DVWA](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/Kali%2Bmetasploitable2/SQLi%20tr%C3%AAn%20DVWA2.png)
 
 ## Bảng tổng hợp vấn đề gặp phải
 
