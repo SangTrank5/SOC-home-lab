@@ -19,7 +19,7 @@ sudo apt update
 sudo apt install -y suricata
 ```
 
-![Cài đặt Suricata](../screenshots/05-suricata/suricata-install.png)
+![Cài đặt Suricata](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/NIDS-suricata/c%C3%A0i%20suricata%20th%C3%A0nh%20c%C3%B4ng.png)
 
 ## 2. Cấu hình đúng interface mạng lab
 
@@ -35,7 +35,7 @@ Sửa cấu hình để Suricata lắng nghe đúng interface (mặc định fil
 sudo sed -i 's/eth0/ens37/g' /etc/suricata/suricata.yaml
 ```
 
-![Sed thay đổi interface](../screenshots/05-suricata/suricata-interface-config.png)
+![Sed thay đổi interface](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/NIDS-suricata/Config%20l%E1%BA%A1i%20suricata.png)
 
 ## 3. Cài rule mặc định và khởi động
 
@@ -77,7 +77,7 @@ Kiểm tra `fast.log` trên victim, xác nhận 2 loại alert đã nổ:
 [**] [1:2200025:2] SURICATA ICMPv4 unknown code [**]
 ```
 
-![Alert Suricata trong fast.log](../screenshots/05-suricata/fast-log-alerts.png)
+![Alert Suricata trong fast.log](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/NIDS-suricata/x%C3%A1c%20nh%E1%BA%ADn%20suricata%20ho%E1%BA%A1t%20%C4%91%E1%BB%99ng%20th%C3%A0nh%20c%C3%B4ng.png)
 
 ## 5. Cài Wazuh Agent trên Ubuntu victim
 
@@ -108,7 +108,7 @@ Restart agent, tạo lại traffic test (nmap từ Kali), sau đó trên dashboa
 data.alert.signature:*
 ```
 
-![Alert Suricata hợp nhất trên Wazuh Dashboard](../screenshots/05-suricata/wazuh-suricata-integrated.png)
+![Alert Suricata hợp nhất trên Wazuh Dashboard](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/NIDS-suricata/Suricata%20tr%C3%AAn%20wazuh.png)
 
 ## Bảng tổng hợp vấn đề gặp phải
 
