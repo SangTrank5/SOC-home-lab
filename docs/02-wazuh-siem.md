@@ -12,7 +12,17 @@ Dựng Wazuh SIEM (Manager + Indexer + Dashboard) làm trung tâm thu thập, ph
 | Wazuh Agent | Gửi log từ endpoint về manager | Windows Server 2022 |
 | Sysmon | Ghi log chi tiết process creation, network connection | Windows Server 2022 |
 
-## 1. Cài đặt Sysmon trên Windows Server 2022
+## 1. Cài đặt Wazuh Manager + Indexer + Dashboard trên Ubuntu Server
+
+```terminal
+curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash
+./wazuh-install.sh -a -i
+```
+![Cấu hình](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/wazuh-siem/C%E1%BA%A5u%20h%C3%ACnh%20wazuh-manager.png)
+
+![Wazuh-dashboard](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/wazuh-siem/Wazuh-dashboard.png)
+
+## 2. Cài đặt Sysmon trên Windows Server 2022
 
 Tải Sysmon và config cộng đồng SwiftOnSecurity (chuẩn phổ biến, cân bằng giữa độ chi tiết và nhiễu):
 
@@ -27,9 +37,9 @@ Cài đặt với config đã tải, sử dụng file XML tùy chỉnh:
 .\Sysmon64.exe -accepteula -i sysmonconfig.xml
 ```
 
-![Cài đặt Sysmon](../screenshots/02-wazuh/sysmon-install.png)
+![Sysmon](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/wazuh-siem/sysmon.png)
 
-## 2. Cài Wazuh Agent trên Windows Server qua Dashboard
+## 3. Cài Wazuh Agent trên Windows Server qua Dashboard
 
 Trên Wazuh Dashboard (Ubuntu manager) → **Endpoints Summary → Deploy new agent** → chọn Windows → dashboard sinh lệnh cài đặt, chạy trên PowerShell Administrator:
 
@@ -37,9 +47,7 @@ Trên Wazuh Dashboard (Ubuntu manager) → **Endpoints Summary → Deploy new ag
 Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.12.0-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='<WAZUH_MANAGER_IP>'
 ```
 
-![Cài đặt Wazuh Agent](../screenshots/02-wazuh/agent-install.png)
-
-## 3. Trỏ Wazuh Agent đọc log Sysmon
+## 4. Trỏ Wazuh Agent đọc log Sysmon
 
 Mở file cấu hình agent, thêm block `<localfile>` trỏ tới kênh Sysmon:
 
@@ -54,9 +62,7 @@ notepad "C:\Program Files (x86)\ossec-agent\ossec.conf"
 </localfile>
 ```
 
-![Cấu hình localfile Sysmon](../screenshots/02-wazuh/ossec-conf-sysmon.png)
-
-## 4. Cấu hình Windows ghi lại sự kiện logon (Event ID 4625)
+## 5. Cấu hình Windows ghi lại sự kiện logon (Event ID 4625)
 
 Xác nhận Audit Policy đã bật ghi log cả Success lẫn Failure cho Logon, để Wazuh có thể phát hiện các lần đăng nhập thất bại (Event ID 4625) — nền tảng cho việc phát hiện brute-force sau này:
 
@@ -70,7 +76,7 @@ Nếu chưa bật đủ, kích hoạt:
 auditpol /set /subcategory:"Logon" /success:enable /failure:enable
 ```
 
-![Xác nhận Event ID 4625 xuất hiện trên dashboard](../screenshots/02-wazuh/event-4625.png)
+![Xác nhận Event ID 4625 xuất hiện trên dashboard](https://github.com/SangTrank5/SOC-home-lab/blob/main/screenshots/wazuh-siem/Wazuh%20%C4%91%C3%A3%20ghi%20nh%E1%BA%ADn%20eventID%3D4625.png)
 
 ## Bảng tổng hợp vấn đề gặp phải
 
