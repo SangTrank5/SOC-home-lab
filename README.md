@@ -1,6 +1,6 @@
 # SOC Home Lab
 
-Home lab mô phỏng môi trường Security Operations Center (SOC) thực tế, xây dựng trên VMware Workstation với ngân sách phần cứng hạn chế (~120GB ổ đĩa). Lab tập trung vào 3 trụ cột: **Detection Engineering**, **Threat Hunting**, và **Incident Response** — thay vì chỉ dừng lại ở việc cài đặt công cụ, mỗi module đều có kịch bản tấn công thật, bằng chứng phát hiện thật, và quy trình debug thật.
+Home lab mô phỏng môi trường Security Operations Center (SOC) thực tế, xây dựng trên VMware Workstation. Lab tập trung vào 3 trụ cột: **Detection Engineering**, **Threat Hunting**, và **Incident Response** — thay vì chỉ dừng lại ở việc cài đặt công cụ, mỗi module đều có kịch bản tấn công thật, bằng chứng phát hiện thật, và quy trình debug thật.
 
 ---
 
