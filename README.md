@@ -7,25 +7,32 @@ Home lab mô phỏng môi trường Security Operations Center (SOC) thực tế
 ## Kiến trúc lab
 
 ```
-                        ┌─────────────────────────┐
-                        │   Wazuh Manager (Ubuntu) │
-                        │   SIEM - Indexer/Dashboard│
-                        └────────────┬─────────────┘
-                                     │ agent logs
-              ┌──────────────────────┼──────────────────────┐
-              │                      │                      │
-    ┌─────────▼─────────┐  ┌────────▼──────────┐  ┌─────────▼─────────┐
-    │  Windows Server    │  │  Ubuntu Victim     │  │   Metasploitable2  │
-    │  2022               │  │  + Suricata (NIDS) │  │   (unmonitored     │
-    │  + Sysmon (HIDS)    │  │  + auditd (HIDS)   │  │   target)           │
-    └─────────────────────┘  └────────────────────┘  └─────────────────────┘
-              ▲                      ▲                      ▲
-              └──────────────────────┴──────────────────────┘
-                                     │
-                        ┌────────────┴─────────────┐
-                        │      Kali Linux            │
-                        │      (Attacker)             │
-                        └─────────────────────────────┘
+┌───────────────────────────────────────────────────────────────┐
+│         VMware Custom VMnet · 10.2.66.0/24 (isolated)         │
+│                                                               │
+│                   ┌───────────────────────┐                   │
+│                   │       Kali Linux      │                   │
+│                   │  Attacker (Red Team)  │                   │
+│                   └───────────────────────┘                   │
+│                               │  attacks                      │
+│                ┌──────────────┴──────────────┐                │
+│                ▼                             ▼                │
+│     ┌─────────────────────┐       ┌─────────────────────┐     │
+│     │ Windows Server 2022 │       │     Ubuntu 20.04    │     │
+│     │  Victim · Endpoint  │       │ Victim · NIDS sensor│     │
+│     │    Sysmon (HIDS)    │       │  Suricata + auditd  │     │
+│     │     Wazuh Agent     │       │     Wazuh Agent     │     │
+│     └─────────────────────┘       └─────────────────────┘     │
+│                │     agent logs + alerts     │                │
+│                └──────────────┬──────────────┘                │
+│                               ▼                               │
+│                   ┌───────────────────────┐                   │
+│                   │     Wazuh Manager     │                   │
+│                   │  Indexer · Dashboard  │                   │
+│                   │     SIEM (Ubuntu)     │                   │
+│                   └───────────────────────┘                   │
+│                                                               │
+└───────────────────────────────────────────────────────────────┘
 ```
 
 Mạng lab chạy trên VMware Custom VMnet (subnet cô lập `10.2.66.0/24`), tách biệt hoàn toàn khỏi mạng nhà.
@@ -99,7 +106,7 @@ soc-home-lab/
 | T1069 - Permission Groups Discovery | Discovery | `sudo -l` |
 | T1057 - Process Discovery | Discovery | Wazuh default rule 92604 |
 
-Xem chi tiết heat map tại [`attack-navigator/coverage-matrix.svg`](attack-navigator/coverage-matrix.svg).
+Xem chi tiết heat map tại [`attack-navigator/coverage-matrix.svg`](attack-navigator/SOC_Home_Lab__Detection_Coverage.svg).
 
 ## Công nghệ sử dụng
 
