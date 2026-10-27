@@ -41,8 +41,6 @@ Mạng lab chạy trên VMware Custom VMnet (subnet cô lập `10.2.66.0/24`), t
 | Attacker | Mô phỏng red team | Kali Linux |
 | Victim - Windows | Endpoint giám sát | Windows Server 2022 |
 | Victim - Linux | Endpoint giám sát + NIDS sensor | Ubuntu 20.04 |
-| Target | Máy dễ tổn thương (network/service) | Metasploitable2 |
-| Target | Máy dễ tổn thương (web app) | DVWA, OWASP Juice Shop (Docker) |
 | Simulation | Giả lập kỹ thuật MITRE ATT&CK | Atomic Red Team |
 
 ## Điểm nổi bật
@@ -84,14 +82,9 @@ soc-home-lab/
 
 | # | Module | Nội dung chính |
 |---|---|---|
-| 1 | [Network Foundation](incident-reports/01-network-foundation.md) | VMware Custom VMnet, subnet cô lập 10.2.66.0/24 |
 | 2 | [Wazuh SIEM](incident-reports/02-wazuh-siem.md) | Cài đặt Manager/Indexer/Dashboard, tích hợp Windows/Linux agent, Sysmon |
-| 3 | [Kali + Metasploitable2](incident-reports/03-kali-metasploitable.md) | Nmap recon, Metasploit RCE (vsftpd backdoor), Hydra brute-force, SQLi trên DVWA |
 | 4 | [Detection Engineering](incident-reports/04-detection-engineering.md) | Viết & test custom Wazuh rule bằng Atomic Red Team |
 | 5 | [NIDS - Suricata](incident-reports/05-nids-suricata.md) | Suricata trên Linux victim, tích hợp eve.json vào Wazuh |
-| 6 | [Incident Response](incident-reports/06-incident-response.md) | Kịch bản SSH brute-force đầy đủ: detect → investigate → contain → report |
-| 7 | [ATT&CK Navigator](incident-reports/07-attack-navigator.md) | Coverage matrix, phân tích detection gap |
-
 ## MITRE ATT&CK Coverage
 
 | Technique | Tactic | Rule/Bằng chứng |
