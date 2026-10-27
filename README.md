@@ -67,13 +67,9 @@ Mạng lab chạy trên VMware Custom VMnet (subnet cô lập `10.2.66.0/24`), t
 soc-home-lab/
 ├── README.md
 ├── docs/                      # Chi tiết từng module
-│   ├── 01-network-foundation.md
 │   ├── 02-wazuh-siem.md
-│   ├── 03-kali-metasploitable.md
 │   ├── 04-detection-engineering.md
-│   ├── 05-nids-suricata.md
-│   ├── 06-incident-response.md
-│   └── 07-attack-navigator.md
+│   └── 05-nids-suricata.md
 ├── wazuh-rules/
 │   └── local_rules.xml        # Toàn bộ custom rule
 ├── incident-reports/
@@ -110,7 +106,7 @@ Xem chi tiết heat map tại [`attack-navigator/coverage-matrix.svg`](attack-na
 
 ## Công nghệ sử dụng
 
-`VMware Workstation` `Wazuh 4.12` `Suricata 8.0.6` `Sysmon` `auditd` `Kali Linux` `Metasploit Framework` `Hydra` `Nmap` `DVWA` `OWASP Juice Shop` `Atomic Red Team` `MITRE ATT&CK Navigator`
+`VMware Workstation` `Wazuh 4.12` `Suricata 8.0.6` `Sysmon` `auditd` `Kali Linux` `Metasploit Framework` `Hydra` `Nmap` `Atomic Red Team` `MITRE ATT&CK Navigator`
 
 ## Ghi chú
 
